@@ -18,6 +18,10 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
+# Set execute permissions on mvnw and ensure .mvn/wrapper has correct permissions
+RUN chmod +x mvnw && \
+    chmod -R 777 .mvn/wrapper
+
 # Download dependencies
 RUN ./mvnw dependency:go-offline -B
 
