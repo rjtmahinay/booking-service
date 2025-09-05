@@ -39,6 +39,11 @@ public class BookingController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     public Mono<BookingResponse> createBooking(@Valid @RequestBody BookingRequest request) {
+        // Auto-generate seat number if blank
+        String seatNumber = request.getSeatNumber();
+        if (seatNumber == null || seatNumber.isBlank()) {
+            seatNumber = "A" + String.format("%02d", (int) (Math.random() * 100));
+        }
         // Convert DTO to entity
         Booking booking = Booking.builder()
                 .id("BKG" + java.util.UUID.randomUUID().toString().substring(0, 5).toUpperCase())
@@ -49,7 +54,7 @@ public class BookingController {
                 .arrivalTime(request.getArrivalTime())
                 .passengerName(request.getPassengerName())
                 .status("CONFIRMED")
-                .seatNumber(request.getSeatNumber())
+                .seatNumber(seatNumber)
                 .bookingDate(java.time.LocalDateTime.now())
                 .build();
 

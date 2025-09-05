@@ -25,7 +25,6 @@ public class BookingRequest {
     
     @NotBlank(message = "Passenger name is required")
     private String passengerName;
-    
-    @NotBlank(message = "Seat number is required")
+
     private String seatNumber;
 }
